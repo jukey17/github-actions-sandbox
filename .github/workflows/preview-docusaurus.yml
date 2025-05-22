@@ -6,6 +6,10 @@ on:
       - '.github/workflows/preview-docusaurus.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   preview:
     name: Deploy Preview
