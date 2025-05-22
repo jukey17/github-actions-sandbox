@@ -16,12 +16,15 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: docusaurus-site/package-lock.json
 
       - name: Install dependencies
+        working-directory: docusaurus-site
         run: npm ci
 
       - name: Build website
         id: build
+        working-directory: docusaurus-site
         run: npm run build
 
       - name: Deploy preview
@@ -29,5 +32,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./docusaurus-site/build
           destination_dir: ${{ github.event_name == 'pull_request' && format('preview/pr-{0}', github.event.pull_request.number) || format('preview/run-{0}', github.run_id) }}
